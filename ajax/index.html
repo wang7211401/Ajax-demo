@@ -42,28 +42,31 @@
             var username = form.username.value;
             var password = form.password.value;
             var valid = true;
-            console.log(username,password);
             $('input.error').removeClass('error');
             if($.trim(username) === ''){
                 $('input[name="username"]').addClass('error').next('.errorMessage').text('用户名不能为空');
                 valid = false
             }
             if(password === ''){
-                $('input[name="password"]').addClass('error').next('.errorMessage').text('密码不能为空')
+                $('input[name="password"]').addClass('error').next('.errorMessage').text('密码不能为空');
+                valid = false
             }
             if(valid === false){
                 return
             }
-
             var request = new XMLHttpRequest();
             request.onreadystatechange = function(){
                 if(request.readyState === 4){
                     if(request.status >= 400){
                         let{errors} = JSON.parse(request.responseText);
+                        console.log({errors});
                         for(var key in errors){
                             var value = errors[key];
-                            $(`input[name="${key}"]`).assClass('error').next('.errorMessage').text(value)
+                            $(`input[name="${key}"]`).addClass('error').next('.errorMessage').text(value)
                         }
+                    }else{
+                        alert(request.responseText);
+                        location.href="http://www.baidu.com"
                     }
                 }
             };

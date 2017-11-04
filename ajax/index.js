@@ -51,12 +51,13 @@ var server = http.createServer(function(request, response){
                 }else{
                     errors['username'] = '用户名不存在'
                 }
-                if (password !== '') {
-                } else errors['password'] = '密码不能为空';
+                if (password === '') {
+                    errors['password'] = '密码不能为空';
+                }
 
                 if (Object.keys(errors).length <= 0) {
                     response.statusCode = 200;
-                    response.end('欢迎登录' + '' + username)
+                    response.end('欢迎登录,' + '' + username)
                 } else {
                     response.statusCode = 412;
                     var string = JSON.stringify({errors: errors});
